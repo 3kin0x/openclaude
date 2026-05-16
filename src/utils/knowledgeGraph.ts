@@ -529,7 +529,16 @@ export async function getOrchestratedMemory(query: string): Promise<string> {
   
   if (oramaDb) {
     try {
-      const results = await search(oramaDb, { term: query, limit: 20 })
+      const results = await search(oramaDb, {
+        term: query,
+        limit: 20,
+        tolerance: 1,
+        boost: {
+          name: 2,
+          type: 1.5,
+          content: 1,
+        },
+      })
       let visibleHits = 0
       let hitsContent = ''
 
